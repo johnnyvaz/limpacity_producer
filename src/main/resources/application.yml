@@ -35,6 +35,17 @@ spring:
       javax:
         persistence.query.timeout: ${QUERY_TIMEOUT:10000}
         persistence.lock.timeout: ${LOCK_TIMEOUT:3000}
+  rabbitmq:
+    host: ${RABBIT-HOST}
+    port: ${RABBIT-PORT}
+    username: ${RABBIT-USERNAME}
+    password: ${RABBIT-PASSWORD}
+    virtual-host: ${RABBIT-VHOST}
+    events:
+      solicitaColeta:
+        exchange: ${MQ_EXCHANGE_SOLICITA_COLETA}
+        routingkey: ${MQ_ROUTINGKEY_SOLICITA_COLETA}
+
   security:
     user:
       name: ${SECURITY-USERNAME}

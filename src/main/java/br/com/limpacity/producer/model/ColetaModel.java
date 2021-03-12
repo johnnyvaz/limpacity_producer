@@ -23,9 +23,8 @@ public class ColetaModel {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private Long quantidade;
-//    private PostoColetaModel postoColeta;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

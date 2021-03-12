@@ -2,17 +2,21 @@ package br.com.limpacity.producer.controller;
 
 import br.com.limpacity.producer.controller.base.BaseController;
 import br.com.limpacity.producer.controller.base.ResponseBodyDTO;
-import br.com.limpacity.producer.dto.ColetaDTO;
-import br.com.limpacity.producer.model.ColetaModel;
+import br.com.limpacity.producer.dto.SolicitaColetaDTO;
 import br.com.limpacity.producer.service.ColetaService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -24,33 +28,21 @@ public class ColetaController extends BaseController {
 
     private final Logger logger = Logger.getLogger(ColetaController.class);
 
+    private static final String MESSAGE_SOLICITACAO_COLETA = "Solicitação de Coleta enviada com sucesso";
+
     @Autowired
     private final ColetaService coletaService;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Finish load success"),
+            @ApiResponse(responseCode = "400", description = "Request contains invalid parameters"),
+            @ApiResponse(responseCode = "500", description = "Unexpected error for request finish load")
+    })
     @PostMapping
     @Operation(description = "Insere um novo coleta reciclável")
-    public ResponseEntity<ResponseBodyDTO<ColetaModel>> postColeta(@Valid @RequestBody ColetaDTO coleta) {
-        return buildResponseBody(coletaService.create(coleta), HttpStatus.OK);
+    public ResponseEntity<ResponseBodyDTO<String>> solColeta(@Valid @RequestBody SolicitaColetaDTO request) {
+        coletaService.solColeta(request);
+        return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA, HttpStatus.OK);
     }
 
-    @GetMapping
-    @Operation(description = "Busca os materiais cadastrados")
-    public ResponseEntity<ResponseBodyDTO<ColetaModel>> findAll() throws Exception {
-        return buildResponseBody(coletaService.findAllAndIntegrationStatus(), HttpStatus.OK);
-    }
-
-    @PutMapping("{id}")
-    @Operation(description = "Altera um coleta")
-    public ResponseEntity<ResponseBodyDTO<ColetaModel>> updateColeta(@PathVariable("id") Long id,
-                                      @RequestBody ColetaDTO coleta){
-        return buildResponseBody(coletaService.updateColeta(id, coleta), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("{id}")
-    @Operation(description = "Exclui um coleta")
-    public ResponseEntity<ResponseBodyDTO<ColetaModel>> inactiveColeta(@PathVariable("id") Long id){
-        String usuario = "sistema";
-        logger.info(" Coleta id " + id + " excluido pelo usuário " + usuario);
-        return  buildResponseBody(coletaService.inactiveColeta(id), HttpStatus.OK);
-    }
 }
