@@ -1,6 +1,6 @@
 package br.com.limpacity.producer.producer.impl;
 
-import br.com.limpacity.producer.dto.SolicitaColetaDTO;
+import br.com.limpacity.producer.dto.SolicitaColetaUuidDTO;
 import br.com.limpacity.producer.producer.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MessageSolicitaColetaImpl implements Producer<SolicitaColetaDTO> {
+public class MessageSolicitaColetaImpl implements Producer<SolicitaColetaUuidDTO> {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -22,7 +22,7 @@ public class MessageSolicitaColetaImpl implements Producer<SolicitaColetaDTO> {
     private String queueRoutingKey;
 
     @Override
-    public void execute(final SolicitaColetaDTO message) {
+    public void execute(final SolicitaColetaUuidDTO message) {
         log.info("got the RoutingKey {} - " + queueRoutingKey);
         rabbitTemplate.convertAndSend(exchangeName, queueRoutingKey, message);
         log.info("message sent {} - " + exchangeName);

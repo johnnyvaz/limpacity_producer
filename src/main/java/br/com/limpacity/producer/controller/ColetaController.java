@@ -39,7 +39,7 @@ public class ColetaController extends BaseController {
             @ApiResponse(responseCode = "500", description = "Unexpected error for request finish load")
     })
     @PostMapping
-    @Operation(description = "Insere um novo coleta reciclável")
+    @Operation(description = "Insere na fila RabbitMQ uma nova solicitação de coleta")
     public ResponseEntity<ResponseBodyDTO<String>> solColeta(@Valid @RequestBody SolicitaColetaDTO request) {
         coletaService.solColeta(request);
         return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA, HttpStatus.OK);
