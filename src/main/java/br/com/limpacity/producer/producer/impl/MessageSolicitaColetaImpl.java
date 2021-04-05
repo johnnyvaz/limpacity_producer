@@ -18,13 +18,13 @@ public class MessageSolicitaColetaImpl implements Producer<SolicitaColetaUuidDTO
     @Value("${spring.rabbitmq.events.solicitaColeta.exchange}")
     private String exchangeName;
 
-    @Value("${spring.rabbitmq.events.solicitaColeta.routingkey}")
-    private String queueRoutingKey;
+    @Value("${spring.rabbitmq.events.solicitaColeta.queueAguardando}")
+    private String queueAguardando;
 
     @Override
     public void execute(final SolicitaColetaUuidDTO message) {
-        log.info("got the RoutingKey {} - " + queueRoutingKey);
-        rabbitTemplate.convertAndSend(exchangeName, queueRoutingKey, message);
-        log.info("message sent {} - " + exchangeName);
+        log.info("got the RoutingKey {} - " + queueAguardando);
+        rabbitTemplate.convertAndSend(exchangeName, queueAguardando, message);
+        log.info("message sent - " + message);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Data
@@ -13,11 +14,20 @@ import java.util.Date;
 @NoArgsConstructor
 public class SolicitaColetaDTO {
 
-    private String id;
+    @NotEmpty
+    private String material;
 
-    private String type;
-
+    @NotEmpty
     private String endereco;
+
+    @NotEmpty
+    private String numero;
+
+    @NotEmpty
+    private String municipio;
+
+    @NotEmpty
+    private String cep;
 
     private Boolean reciclavel;
 
@@ -27,5 +37,4 @@ public class SolicitaColetaDTO {
 
     private String integrationStatus;
 
-    Date creationDate;
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @SuperBuilder
 public abstract class MessageDTO {
 
-	private String messageType;
-	private Date currentDate;
+	private final String messageType;
+	private final Date currentDate;
 
 }

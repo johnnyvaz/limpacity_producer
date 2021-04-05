@@ -16,21 +16,37 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ColetaServiceImpl implements ColetaService {
 
-    private Producer<SolicitaColetaUuidDTO> producer;
+    private final Producer<SolicitaColetaUuidDTO> producer;
 
     @Override
-    public void solColeta(final SolicitaColetaDTO coleta) {
-        SolicitaColetaUuidDTO coletaUuid = new SolicitaColetaUuidDTO();
+    public void solColeta(SolicitaColetaDTO coleta) {
+        SolicitaColetaUuidDTO coletaUuid;
+        coletaUuid = toColeta(coleta);
         coletaUuid.setUuid(UUID.randomUUID());
-        coletaUuid.setSolicitaColeta(coleta);
 
-        log.info("Sending message for coleta id", coletaUuid.toString() );
+        log.info("Sending message for coleta id" + coletaUuid.toString() );
         try {
             producer.execute(coletaUuid);
         } catch (final Exception e) {
             log.error("Error unexpected for uuid={}", coletaUuid);
             throw new ColetaNotFoundException();
         }
+    }
+
+    public static SolicitaColetaUuidDTO toColeta(SolicitaColetaDTO coleta){
+        return SolicitaColetaUuidDTO
+                .builder()
+                .solicitaColeta(SolicitaColetaDTO.builder()
+                        .material(coleta.getMaterial())
+                        .municipio(coleta.getMunicipio())
+                        .cep(coleta.getCep())
+                        .endereco(coleta.getEndereco())
+                        .dataLimite(coleta.getDataLimite())
+                        .quantidade(coleta.getQuantidade())
+                        .reciclavel(coleta.getReciclavel())
+                        .integrationStatus(coleta.getIntegrationStatus())
+                        .build())
+                .build();
     }
 
 }
