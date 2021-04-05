@@ -8,33 +8,6 @@ spring:
     active: ${ENV:prod}
   application:
     name: limpacity
-  datasource:
-    hikari:
-      minimum-idle: ${minimum-idle:5}
-      idle-timeout: ${idle-timeout:10000}
-      connectionTimeout: ${idle-timeout:10000}
-      poolName: SpringBootJPAHikariCP
-    url: jdbc:mysql://${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-    type: com.zaxxer.hikari.HikariDataSource
-  jpa:
-    open-in-view: false
-    show-sql: ${LOG_SQL:true}
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql: true
-        dialect: org.hibernate.dialect.MySQL55Dialect
-        proc:
-          param_null_passing:true
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      javax:
-        persistence.query.timeout: ${QUERY_TIMEOUT:10000}
-        persistence.lock.timeout: ${LOCK_TIMEOUT:3000}
   rabbitmq:
     host: ${RABBIT-HOST}
     port: ${RABBIT-PORT}

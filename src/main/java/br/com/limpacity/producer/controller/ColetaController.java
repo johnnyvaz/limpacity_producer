@@ -42,8 +42,8 @@ public class ColetaController extends BaseController {
     @Operation(description = "Insere na fila RabbitMQ uma nova solicitação de coleta")
     public ResponseEntity<ResponseBodyDTO<String>> solColeta(@Valid @RequestBody SolicitaColetaDTO request) {
         System.out.println("Request no controller" + request);
-        var ret = coletaService.solColeta(request);
-        return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA + ret, HttpStatus.OK);
+        coletaService.solColeta(request);
+        return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA, HttpStatus.OK); // TODO: ALTERAR RETORNO CONFORME STATUS DA MENSAGEM
     }
 
 }
