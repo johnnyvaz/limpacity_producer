@@ -1,16 +1,18 @@
 package br.com.limpacity.producer.producer.impl;
 
-import br.com.limpacity.producer.dto.SolicitaColetaUuidDTO;
-import br.com.limpacity.producer.producer.ProducerColeta;
+import br.com.limpacity.producer.dto.NotificaEmailDTO;
+import br.com.limpacity.producer.producer.ProducerEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
-public class MessageSolicitaColetaImpl implements ProducerColeta<SolicitaColetaUuidDTO> {
+public class MessageNotificaEmailImpl implements ProducerEmail<NotificaEmailDTO> {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -18,13 +20,12 @@ public class MessageSolicitaColetaImpl implements ProducerColeta<SolicitaColetaU
     @Value("${spring.rabbitmq.events.solicitaColeta.exchange}")
     private String exchangeName;
 
-    @Value("${spring.rabbitmq.events.solicitaColeta.queueAguardando}")
-    private String queueAguardando;
+    @Value("${spring.rabbitmq.events.solicitaColeta.queueEmail}")
+    private String queueEmail;
 
-    @Override
-    public void executeSolicitacao(final SolicitaColetaUuidDTO message) {
-        log.info("got the RoutingKey {} - " + queueAguardando);
-        rabbitTemplate.convertAndSend(exchangeName, queueAguardando, message);
+    public void executeNotifica(final NotificaEmailDTO message) {
+        log.info("got the RoutingKey {} - " + queueEmail);
+        rabbitTemplate.convertAndSend(exchangeName, queueEmail, message);
         log.info("message sent - " + message);
     }
 }

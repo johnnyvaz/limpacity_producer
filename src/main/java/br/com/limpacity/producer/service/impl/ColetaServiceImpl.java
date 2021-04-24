@@ -3,7 +3,7 @@ package br.com.limpacity.producer.service.impl;
 import br.com.limpacity.producer.dto.SolicitaColetaDTO;
 import br.com.limpacity.producer.dto.SolicitaColetaUuidDTO;
 import br.com.limpacity.producer.exception.ColetaNotFoundException;
-import br.com.limpacity.producer.producer.Producer;
+import br.com.limpacity.producer.producer.ProducerColeta;
 import br.com.limpacity.producer.service.ColetaService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ColetaServiceImpl implements ColetaService {
 
-    private final Producer<SolicitaColetaUuidDTO> producer;
+    private final ProducerColeta<SolicitaColetaUuidDTO> producerColeta;
 
     @Override
     public void solColeta(SolicitaColetaDTO coleta) {
@@ -26,7 +26,7 @@ public class ColetaServiceImpl implements ColetaService {
 
         log.info("Sending message for coleta id" + coletaUuid.toString() );
         try {
-            producer.execute(coletaUuid);
+            producerColeta.executeSolicitacao(coletaUuid);
         } catch (final Exception e) {
             log.error("Error unexpected for uuid={}", coletaUuid);
             throw new ColetaNotFoundException();
@@ -36,16 +36,14 @@ public class ColetaServiceImpl implements ColetaService {
     public static SolicitaColetaUuidDTO toColeta(SolicitaColetaDTO coleta){
         return SolicitaColetaUuidDTO
                 .builder()
-                .solicitaColeta(SolicitaColetaDTO.builder()
-                        .material(coleta.getMaterial())
-                        .municipio(coleta.getMunicipio())
-                        .cep(coleta.getCep())
-                        .endereco(coleta.getEndereco())
-                        .dataLimite(coleta.getDataLimite())
-                        .quantidade(coleta.getQuantidade())
-                        .reciclavel(coleta.getReciclavel())
-                        .integrationStatus(coleta.getIntegrationStatus())
-                        .build())
+                .material(coleta.getMaterial())
+                .municipio(coleta.getMunicipio())
+                .cep(coleta.getCep())
+                .endereco(coleta.getEndereco())
+                .dataLimite(coleta.getDataLimite())
+                .quantidade(coleta.getQuantidade())
+                .reciclavel(coleta.getReciclavel())
+                .integrationStatus(coleta.getIntegrationStatus())
                 .build();
     }
 

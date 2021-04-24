@@ -1,6 +1,6 @@
 package br.com.limpacity.producer.controller.advicer;
 
-import br.com.limpacity.producer.controller.base.*;
+import br.com.limpacity.producer.controller.base.ResponseBodyDTO;
 import br.com.limpacity.producer.controller.base.error.ErrorCodeEnum;
 import br.com.limpacity.producer.controller.base.error.ErrorDTO;
 import br.com.limpacity.producer.controller.base.error.ErrorDTOFactory;

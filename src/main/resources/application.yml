@@ -18,6 +18,7 @@ spring:
       solicitaColeta:
         exchange: ${MQ_EXCHANGE_COLETA}
         queueAguardando: ${MQ_COLETA_AGUARDANDO}
+        queueEmail: ${MQ_COLETA_NOTIFICAR_EMAIL}
 
   security:
     user:
