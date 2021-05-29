@@ -4,6 +4,5 @@ public interface ProducerColetaQrCode<T> {
 
     void executeSolicitacaoQrCode(T message);
 
-
 }
 

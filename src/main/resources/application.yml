@@ -18,7 +18,7 @@ spring:
       solicitaColeta:
         exchange: ${MQ_EXCHANGE_COLETA}
         queueAguardando: ${MQ_COLETA_AGUARDANDO}
-        queueAguardandoQrCode: ${MQ_COLETA_AGUARDANDO_QRCODE}
+        queueColetaQrCode: ${MQ_COLETA_QRCODE}
         queueEmail: ${MQ_COLETA_NOTIFICAR_EMAIL}
 
   security:

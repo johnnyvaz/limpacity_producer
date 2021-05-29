@@ -1,8 +1,18 @@
 {
   "properties": [
     {
-      "name": "spring.rabbitmq.events.solicitaColeta.exchange",
-      "type": "java.lang.String",
+      "name": "spring.rabbitmq.events.solicitaColeta.exchange" ,
+      "type": "java.lang.String" ,
       "description": "Description for spring.rabbitmq.events.solicitaColeta.exchange."
-  }
-] }
+    } ,
+    {
+      "name": "spring.rabbitmq.events.solicitaColeta.queueAguardandoQrCode" ,
+      "type": "java.lang.String" ,
+      "description": "Description for spring.rabbitmq.events.solicitaColeta.queueAguardandoQrCode."
+    } ,
+    {
+      "name": "spring.rabbitmq.events.solicitaColeta.queueAguardandoQrCode" ,
+      "type": "java.lang.String" ,
+      "description": "Description for spring.rabbitmq.events.solicitaColeta.queueAguardandoQrCode."
+    }
+  ] }

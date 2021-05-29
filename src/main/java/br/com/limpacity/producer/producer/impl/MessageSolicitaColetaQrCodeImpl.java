@@ -1,8 +1,6 @@
 package br.com.limpacity.producer.producer.impl;
 
 import br.com.limpacity.producer.dto.SendColetaQrCodeDTO;
-import br.com.limpacity.producer.dto.SolicitaColetaUuidDTO;
-import br.com.limpacity.producer.producer.ProducerColeta;
 import br.com.limpacity.producer.producer.ProducerColetaQrCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -20,13 +18,13 @@ public class MessageSolicitaColetaQrCodeImpl implements ProducerColetaQrCode<Sen
     @Value("${spring.rabbitmq.events.solicitaColeta.exchange}")
     private String exchangeName;
 
-    @Value("${spring.rabbitmq.events.solicitaColeta.queueAguardandoQrCode}")
-    private String queueAguardandoQrCode;
+    @Value("${spring.rabbitmq.events.solicitaColeta.queueColetaQrCode}")
+    private String queueColetaQrCode;
 
     @Override
     public void executeSolicitacaoQrCode(final SendColetaQrCodeDTO message) {
-        log.info("got the RoutingKey {} - " + queueAguardandoQrCode);
-        rabbitTemplate.convertAndSend(exchangeName, queueAguardandoQrCode, message);
-        log.info("message sent - " + message);
+        log.info("RoutingKey : " + queueColetaQrCode);
+        rabbitTemplate.convertAndSend(exchangeName, queueColetaQrCode, message);
+        log.info("mensagem enviada : " + message);
     }
 }
