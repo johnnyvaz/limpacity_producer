@@ -3,6 +3,7 @@ package br.com.limpacity.producer.controller;
 import br.com.limpacity.producer.controller.base.BaseController;
 import br.com.limpacity.producer.controller.base.ResponseBodyDTO;
 import br.com.limpacity.producer.dto.SolicitaColetaDTO;
+import br.com.limpacity.producer.dto.SolicitaColetaQrCodeDTO;
 import br.com.limpacity.producer.service.ColetaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,16 @@ public class ColetaController extends BaseController {
     public ResponseEntity<ResponseBodyDTO<String>> solColeta(@Valid @RequestBody SolicitaColetaDTO request) {
         System.out.println("Request no controller" + request);
         coletaService.solColeta(request);
-        return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA, HttpStatus.CREATED); // TODO: ALTERAR RETORNO CONFORME STATUS DA MENSAGEM
+        return buildSuccessResponse(MESSAGE_SOLICITACAO_COLETA, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/qrcode/{posto}")
+    @Operation(description = "Insere uma nova solicitação de coleta vindo da leitura" +
+            " do QRCode do posto de coleta ")
+    public ResponseEntity<ResponseBodyDTO<String>> solColetaQrcode(
+            @Valid @RequestBody SolicitaColetaQrCodeDTO coleta, @PathVariable("posto") Long posto){
+        logger.info("Solicitação Qrcode : Posto {} " + posto );
+        coletaService.solColetaQrCode(coleta, posto);
+        return buildResponseBody(MESSAGE_SOLICITACAO_COLETA, HttpStatus.CREATED);
     }
 }
