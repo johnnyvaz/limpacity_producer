@@ -19,7 +19,7 @@ spring:
         exchange: ${MQ_EXCHANGE_COLETA}
         queueAguardando: ${MQ_COLETA_AGUARDANDO}
         queueColetaQrCode: ${MQ_COLETA_QRCODE}
-        queueEmail: ${MQ_COLETA_NOTIFICAR_EMAIL}
+        queueEmail: ${MQ_COLETA_EMAIL}
 
   security:
     user:
